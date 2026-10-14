@@ -1,0 +1,7 @@
+{
+  "name": "Elona et Cantha",
+  "tiles": "images/world/{z}/{x}/{y}.jpg",
+  "maxZoom": 4,
+  "tilesAtZoom0": [4, 3],
+  "realms": ["elona", "cantha"]
+}
