@@ -1,0 +1,17 @@
+{
+  "id": "prophecies",
+  "name": "Prophecies",
+  "tiles": "images/prophecies/{z}/{x}/{y}.jpg",
+  "maxZoom": 4,
+  "tilesAtZoom0": [2, 3],
+  "iconsPath": "icons/prophecies/",
+  "iconTypes": {
+    "city":    { "file": "city.png",    "size": [32, 32] },
+    "outpost": { "file": "outpost.png", "size": [24, 24] },
+    "dungeon": { "file": "dungeon.png", "size": [28, 28] }
+  },
+  "locations": [
+    { "id": "lions-arch", "name": "Lion's Arch", "type": "city",    "x": 1520, "y": 840, "minZoom": 1 },
+    { "id": "catacombs",  "name": "Catacombs",   "type": "dungeon", "x": 1100, "y": 500, "minZoom": 3 }
+  ]
+}

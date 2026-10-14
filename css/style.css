@@ -11,3 +11,9 @@ body, html {
     height: 100vh;
     width: 100vw;
 }
+.leaflet-container {
+    background: #000000 !important;
+}
+.leaflet-control-attribution {
+    display: none !important;
+}
