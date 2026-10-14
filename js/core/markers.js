@@ -1,0 +1,81 @@
+// Échelle de l'icône pour un niveau de zoom, lue dans le JSON de la carte
+function getIconScale(zoom, config) {
+    return config.iconScales?.[zoom] ?? 1;
+}
+
+function addMarkers(map, config) {
+    const entries = [];
+    const startZoom = map.getZoom();
+    const startScale = getIconScale(startZoom, config);
+
+    for (const [type, list] of Object.entries(config.locations)) {
+        const def = config.iconTypes[type];
+
+        list.forEach((loc) => {
+            const minZoom = loc.minZoom ?? 0;
+            const hasLabel = loc.label === true;
+            const labelMinZoom = loc.labelMinZoom ?? config.labelMinZoom ?? 2;
+            const half = def.size[1] / 2;
+
+            // États de départ écrits directement dans le HTML (pas d'animation au chargement)
+            const hiddenClass = startZoom < minZoom ? ' is-hidden' : '';
+            const labelOffClass = startZoom < labelMinZoom ? ' is-off' : '';
+
+            const labelHtml = hasLabel
+                ? `<span class="gw-label${labelOffClass}">${loc.name}</span>`
+                : '';
+
+            const icon = L.divIcon({
+                className: 'gw-marker',
+                iconSize: def.size,
+                iconAnchor: [def.size[0] / 2, half],
+                html: `<div class="gw-item${hiddenClass}" style="--s:${startScale};--half:${half}px">
+                           <img class="gw-icon" src="${config.iconsPath}${def.file}"
+                                alt="${loc.name}" draggable="false">
+                           ${labelHtml}
+                       </div>`
+            });
+
+            const marker = L.marker(
+                map.unproject([loc.x, loc.y], config.maxZoom),
+                { icon }
+            ).addTo(map);
+
+            const root = marker.getElement();
+            entries.push({
+                marker, def, minZoom, hasLabel, labelMinZoom,
+                name: loc.name,
+                item: root.querySelector('.gw-item'),
+                labelEl: root.querySelector('.gw-label')   // null si pas de nom affiché
+            });
+        });
+    }
+
+    // Applique échelle, visibilité, nom et tooltip pour un niveau de zoom
+    const apply = (zoom) => {
+        const scale = getIconScale(zoom, config);
+
+        entries.forEach((e) => {
+            e.item.style.setProperty('--s', scale);
+            e.item.classList.toggle('is-hidden', zoom < e.minZoom);
+
+            const labelShown = e.hasLabel && zoom >= e.labelMinZoom;
+            if (e.labelEl) e.labelEl.classList.toggle('is-off', !labelShown);
+
+            // Tooltip seulement si le nom n'est pas déjà affiché sous l'icône
+            if (labelShown) {
+                if (e.marker.getTooltip()) e.marker.unbindTooltip();
+            } else {
+                if (!e.marker.getTooltip()) {
+                    e.marker.bindTooltip(e.name, { direction: 'bottom' });
+                }
+                e.marker.getTooltip().options.offset =
+                    L.point(0, (e.def.size[1] * scale) / 2);
+            }
+        });
+    };
+
+    map.on('zoomanim', (ev) => apply(ev.zoom));
+    map.on('zoomend', () => apply(map.getZoom()));   // filet de sécurité
+    apply(startZoom);
+}
