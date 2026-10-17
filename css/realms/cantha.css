@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "CanthaFont";
+    src: url("../../assets/realms/cantha/fonts/CanthaFont.woff2") format("woff2");
+    font-display: swap;
+}
+
+.realm-cantha .gw-label, .leaflet-tooltip.realm-cantha {
+    font-family: "CanthaFont", serif;
+}
+
+.realm-cantha .gw-label  {
+    color: #f3d9a4;
+}
+
+.realm-cantha.cat-realm  .gw-label {
+    font-size: 44px; letter-spacing: 4px; text-transform: uppercase;
+}
+
+.realm-cantha.cat-region .gw-label {
+    font-size: 24px; letter-spacing: 2px;
+}

@@ -1,7 +1,7 @@
 {
-  "name": "Elona et Cantha",
+  "name": "Tyrie, Elona, les îles Zaishen et Cantha",
   "tiles": "images/world/{z}/{x}/{y}.jpg",
   "maxZoom": 4,
-  "tilesAtZoom0": [4, 3],
-  "realms": ["elona", "cantha"]
+  "tilesAtZoom0": [3, 6],
+  "realms": ["tyrie", "elona", "cantha"]
 }

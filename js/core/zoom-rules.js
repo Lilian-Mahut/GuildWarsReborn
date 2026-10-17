@@ -1,3 +1,5 @@
+// Toute la logique "à quel zoom ?" est ici et nulle part ailleurs
+
 export function getIconScale(zoom, world) {
     return world.iconScales?.[zoom] ?? 1;
 }
