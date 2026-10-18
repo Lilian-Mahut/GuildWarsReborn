@@ -1,7 +1,7 @@
 {
   "id": "tyrie",
   "name": "Tyrie",
-  "title": { "x": 1000, "y": 1000 },
+  "title": { "x": 4200, "y": 4200 },
   "categories": {
     "region":   { "file": "regions.json" },
     "capital":  { "file": "capitals.json",  "icon": { "file": "capital.png",  "size": [40, 40] } },

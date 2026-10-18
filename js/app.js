@@ -7,6 +7,12 @@ try {
     const world = await loadWorld();
     const map = initMap(world);
     addMarkers(map, world);
+
+    // Outil d'alignement : index.html?align=1
+    if (new URLSearchParams(location.search).get('align') === '1') {
+        const { enableAlignTool } = await import('./core/align-tool.js');
+        enableAlignTool(map, world);
+    }
 } catch (err) {
     console.error(err);
 }

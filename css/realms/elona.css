@@ -1,11 +1,5 @@
-@font-face {
-    font-family: "ElonaFont";
-    src: url("../../assets/realms/elona/fonts/ElonaFont.woff2") format("woff2");
-    font-display: swap;
-}
-
 .realm-elona .gw-label, .leaflet-tooltip.realm-elona {
-    font-family: "ElonaFont", serif;
+    font-family: "RealmFont", serif;
 }
 
 .realm-elona .gw-label  {

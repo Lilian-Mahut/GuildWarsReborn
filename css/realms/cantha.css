@@ -1,11 +1,5 @@
-@font-face {
-    font-family: "CanthaFont";
-    src: url("../../assets/realms/cantha/fonts/CanthaFont.woff2") format("woff2");
-    font-display: swap;
-}
-
 .realm-cantha .gw-label, .leaflet-tooltip.realm-cantha {
-    font-family: "CanthaFont", serif;
+    font-family: "RealmFont", serif;
 }
 
 .realm-cantha .gw-label  {

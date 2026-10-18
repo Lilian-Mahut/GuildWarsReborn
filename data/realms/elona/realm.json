@@ -1,7 +1,7 @@
 {
   "id": "elona",
   "name": "Elona",
-  "title": { "x": 5000, "y": 8500 },
+  "title": { "x": 7500, "y": 11500 },
   "categories": {
     "region":   { "file": "regions.json" },
     "capital":  { "file": "capitals.json",  "icon": { "file": "capital.png",  "size": [40, 40] } },

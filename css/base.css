@@ -6,6 +6,12 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "RealmFont";
+    src: url("../fonts/Cinzel/Cinzel-VariableFont_wght.ttf") format("TrueType");
+    font-display: swap;
+}
+
 body, html {
     margin: 0;
     padding: 0;
@@ -19,7 +25,7 @@ body, html {
     width: 100vw;
 }
 .leaflet-container {
-    background: #000000 !important;
+    background: #919191 !important;
 }
 .leaflet-control-attribution {
     display: none !important;

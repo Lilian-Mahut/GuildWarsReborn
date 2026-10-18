@@ -1,11 +1,5 @@
-@font-face {
-    font-family: "TyrieFont";
-    src: url("../../assets/realms/tyrie/fonts/TyrieFont.woff2") format("woff2");
-    font-display: swap;
-}
-
 .realm-tyrie .gw-label, .leaflet-tooltip.realm-tyrie {
-    font-family: "TyrieFont", serif;
+    font-family: "RealmFont", serif;
 }
 
 .realm-tyrie .gw-label  {
