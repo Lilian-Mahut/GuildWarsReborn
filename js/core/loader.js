@@ -1,16 +1,26 @@
 // Chargement des données : world.json, layers.json et chaque royaume
-
-async function fetchJson(url) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Impossible de charger ${url} (${res.status})`);
-    return res.json();
-}
+import { fetchJson } from './http.js';
 
 function loadStylesheet(href) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = href;
     document.head.appendChild(link);
+}
+
+// Aide : signale les lieux sans id et les id en double (nécessaires aux traductions)
+function checkIds(realm) {
+    const seen = new Set();
+    let missing = 0;
+
+    for (const def of Object.values(realm.categories)) {
+        for (const item of def.items) {
+            if (!item.id) { missing++; continue; }
+            if (seen.has(item.id)) console.warn(`${realm.id} : id en double "${item.id}"`);
+            seen.add(item.id);
+        }
+    }
+    if (missing) console.warn(`${realm.id} : ${missing} lieu(x) sans "id" (voir tools/add-ids.py)`);
 }
 
 async function loadRealm(id) {
@@ -27,9 +37,11 @@ async function loadRealm(id) {
         })
     );
 
-    // Le nom du royaume est une catégorie "realm" avec un seul élément
+    checkIds(realm);
+
+    // Le nom du royaume : catégorie "realm" avec un seul élément (id réservé "_realm")
     realm.categories.realm = {
-        items: [{ name: realm.name, x: realm.title.x, y: realm.title.y }]
+        items: [{ id: '_realm', name: realm.name, x: realm.title.x, y: realm.title.y }]
     };
 
     return realm;

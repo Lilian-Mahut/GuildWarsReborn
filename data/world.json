@@ -1,7 +1,7 @@
 {
   "name": "Tyrie, Elona, les îles Zaishen et Cantha",
   "maxZoom": 4,
-  "realms": ["tyrie", "elona", "cantha"],
+  "realms": ["tyrie", "elona", "zaishen","cantha"],
   "maps": [
     {
       "id": "tyrie",

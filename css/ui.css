@@ -1,0 +1,20 @@
+/* Interface : sélecteur de langue */
+.gw-lang {
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.gw-lang__select {
+    background: transparent;
+    color: #f0f0f0;
+    border: none;
+    padding: 4px 6px;
+    font: 14px/1.4 "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.gw-lang__select option {
+    color: #111;
+}

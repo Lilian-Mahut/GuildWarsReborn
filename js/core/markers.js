@@ -1,9 +1,28 @@
 import { getIconScale, isVisible, hasLabel, isLabelVisible } from './zoom-rules.js';
+import { getName, onLanguageChange } from './i18n.js';
+
+const SHARED_ICONS = 'assets/shared/icons/';
+
+// Affiche le nom (dans la langue courante) sur le nom, l'alt de l'icône et le tooltip
+function setEntryName(entry) {
+    const name = getName(entry.realm.id, entry.item);
+
+    if (entry.labelEl) entry.labelEl.textContent = name;
+    if (entry.imgEl) entry.imgEl.alt = name;
+
+    const tooltip = entry.marker.getTooltip();
+    if (tooltip) tooltip.setContent(name);
+}
 
 function createEntry(map, world, realm, category, def, rule, item) {
     const zoom = map.getZoom();
     const isText = rule.kind === 'text';
-    const size = isText ? [0, 0] : def.icon.size;
+
+    // Icône : celle du lieu, sinon celle du royaume, sinon l'icône partagée (layers.json)
+    const iconDef = item.icon ?? def.icon ?? rule.icon;
+    const iconsPath = (item.icon || def.icon) ? realm.iconsPath : SHARED_ICONS;
+
+    const size = isText ? [0, 0] : iconDef.size;
     const half = size[1] / 2;
 
     const classes = [
@@ -15,13 +34,10 @@ function createEntry(map, world, realm, category, def, rule, item) {
     ].join(' ');
 
     const imgHtml = isText ? '' : `
-        <img class="gw-icon" src="${realm.iconsPath}${def.icon.file}"
-             alt="${item.name}" draggable="false">`;
+        <img class="gw-icon" src="${iconsPath}${iconDef.file}" draggable="false">`;
 
     const labelHtml = (isText || hasLabel(rule, item)) ? `
-        <span class="gw-label${isText || isLabelVisible(zoom, rule, item) ? '' : ' is-off'}">
-            ${item.name}
-        </span>` : '';
+        <span class="gw-label${isText || isLabelVisible(zoom, rule, item) ? '' : ' is-off'}"></span>` : '';
 
     const icon = L.divIcon({
         className: 'gw-marker',
@@ -38,11 +54,15 @@ function createEntry(map, world, realm, category, def, rule, item) {
     ).addTo(map);
 
     const root = marker.getElement();
-    return {
-        marker, realm, def, rule, item, isText,
+    const entry = {
+        marker, realm, iconDef, rule, item, isText,
         el: root.querySelector('.gw-item'),
+        imgEl: root.querySelector('.gw-icon'),
         labelEl: root.querySelector('.gw-label')
     };
+
+    setEntryName(entry);
+    return entry;
 }
 
 // Met à jour toutes les entrées pour un niveau de zoom
@@ -63,13 +83,13 @@ function applyZoom(entries, world, zoom) {
             if (e.marker.getTooltip()) e.marker.unbindTooltip();
         } else {
             if (!e.marker.getTooltip()) {
-                e.marker.bindTooltip(e.item.name, {
+                e.marker.bindTooltip(getName(e.realm.id, e.item), {
                     direction: 'bottom',
                     className: `realm-${e.realm.id}`   // police du royaume
                 });
             }
             e.marker.getTooltip().options.offset =
-                L.point(0, (e.def.icon.size[1] * scale) / 2);
+                L.point(0, (e.iconDef.size[1] * scale) / 2);
         }
     });
 }
@@ -79,11 +99,18 @@ export function addMarkers(map, world) {
 
     world.realms.forEach((realm) => {
         Object.entries(realm.categories).forEach(([category, def]) => {
-            const rule = world.layers[category];
-            if (!rule) {
-                console.warn(`Aucune règle de zoom pour la catégorie "${category}" (layers.json)`);
+            // Règle globale (layers.json), complétée ou remplacée par celle du royaume
+            const rule = { ...world.layers[category], ...def.rule };
+
+            if (!rule.kind) {
+                console.warn(`"${category}" (${realm.id}) : aucune règle de zoom. Ajoute-la dans layers.json ou dans "rule" du royaume.`);
                 return;
             }
+            if (rule.kind === 'icon' && !def.icon && !rule.icon) {
+                console.warn(`"${category}" (${realm.id}) : aucune icône définie.`);
+                return;
+            }
+
             def.items.forEach((item) =>
                 entries.push(createEntry(map, world, realm, category, def, rule, item))
             );
@@ -93,4 +120,7 @@ export function addMarkers(map, world) {
     map.on('zoomanim', (e) => applyZoom(entries, world, e.zoom));
     map.on('zoomend', () => applyZoom(entries, world, map.getZoom()));
     applyZoom(entries, world, map.getZoom());
+
+    // Changement de langue : met à jour tous les noms sans recharger la page
+    onLanguageChange(() => entries.forEach(setEntryName));
 }
