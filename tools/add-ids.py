@@ -13,6 +13,7 @@ import unicodedata
 
 
 def slugify(text):
+    text = text.replace("'", '').replace('\u2019', '')      # apostrophes : Lion's -> lions
     text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode()
     return re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')
 

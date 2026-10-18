@@ -19,10 +19,16 @@ try {
     updateTitle();
     onLanguageChange(updateTitle);
 
-    // Outil d'alignement des cartes : index.html?align=1
-    if (new URLSearchParams(location.search).get('align') === '1') {
+    // Outils de travail, chargés seulement à la demande
+    const params = new URLSearchParams(location.search);
+
+    if (params.get('align') === '1') {          // alignement des cartes
         const { enableAlignTool } = await import('./core/align-tool.js');
         enableAlignTool(map, world);
+    }
+    if (params.get('edit') === '1') {           // saisie des coordonnées
+        const { enableCaptureTool } = await import('./core/capture-tool.js');
+        enableCaptureTool(map, world);
     }
 } catch (err) {
     console.error(err);
