@@ -2,11 +2,11 @@
   "iconScales": [0.3, 0.3, 0.5, 0.7, 1],
   "layers": {
     "realm":    { "kind": "text", "minZoom": 0, "maxZoom": 0 },
-    "region":   { "kind": "text", "minZoom": 1, "maxZoom": 2 },
-    "capital":  { "kind": "icon", "minZoom": 1, "labelMinZoom": 2 },
-    "outpost":  { "kind": "text", "minZoom": 2, "labelMinZoom": 3 },
+    "region":   { "kind": "text", "minZoom": 1, "maxZoom": 1 },
+    "town":  { "kind": "icon", "minZoom": 1, "labelMinZoom": 2 },
+    "outpost":  { "kind": "icon", "minZoom": 2, "labelMinZoom": 3 },
     "mission":  { "kind": "icon", "minZoom": 2, "labelMinZoom": 3 },
-    "zone":     { "kind": "text", "minZoom": 4, "maxZoom": 4 },
+    "zone":     { "kind": "text", "minZoom": 4 },
     "merchant": { "kind": "icon", "minZoom": 4 }
   }
 }

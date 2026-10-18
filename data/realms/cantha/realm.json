@@ -4,10 +4,10 @@
   "title": { "x": 4300, "y": 18500 },
   "categories": {
     "region":   { "file": "regions.json" },
-    "capital":  { "file": "capitals.json",  "icon": { "file": "capital.png",  "size": [40, 40] } },
-    "outpost":  { "file": "outposts.json",  "icon": { "file": "outpost.png",  "size": [24, 24] } },
-    "mission":  { "file": "missions.json",  "icon": { "file": "mission.png",  "size": [28, 28] } },
-    "zone":     { "file": "zones.json",     "icon": { "file": "zone.png",     "size": [24, 24] } },
-    "merchant": { "file": "merchants.json", "icon": { "file": "merchant.png", "size": [20, 20] } }
+    "town":  { "file": "towns.json",  "icon": { "file": "TownIcon.png",  "size": [40, 40] } },
+    "outpost":  { "file": "outposts.json",  "icon": { "file": "OutpostIcon.png",  "size": [24, 24] } },
+    "mission":  { "file": "missions.json",  "icon": { "file": "MissionIcon.png",  "size": [28, 28] } },
+    "zone":     { "file": "zones.json"},
+    "merchant": { "file": "collectors.json", "icon": { "file": "Collector_icon.png", "size": [20, 20] } }
   }
 }

@@ -7,28 +7,24 @@
       "id": "tyrie",
       "tiles": "images/tyrie/{z}/{x}/{y}.jpg",
       "tilesAtZoom0": [2, 3],
-      "nativeMaxZoom": 0,
       "offset": [0, 0]
     },
     {
       "id": "elona",
       "tiles": "images/elona/{z}/{x}/{y}.jpg",
-      "tilesAtZoom0": [2, 3],
-      "nativeMaxZoom": 0,
+      "tilesAtZoom0": [2, 2],
       "offset": [4100, 9210]
     },
     {
       "id": "zaishen",
       "tiles": "images/zaishen/{z}/{x}/{y}.jpg",
       "tilesAtZoom0": [1, 1],
-      "nativeMaxZoom": 0,
       "offset": [0, 12288]
     },
     {
       "id": "cantha",
       "tiles": "images/cantha/{z}/{x}/{y}.jpg",
-      "tilesAtZoom0": [2, 3],
-      "nativeMaxZoom": 0,
+      "tilesAtZoom0": [2, 2],
       "offset": [1000, 16000]
     }
   ]

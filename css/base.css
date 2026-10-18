@@ -25,7 +25,7 @@ body, html {
     width: 100vw;
 }
 .leaflet-container {
-    background: #919191 !important;
+    background: #000000 !important;
 }
 .leaflet-control-attribution {
     display: none !important;
