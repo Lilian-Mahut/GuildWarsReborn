@@ -37,7 +37,7 @@ for realm_dir in sorted(glob.glob('data/realms/*/')):
         for index, item in enumerate(items):
             if 'id' in item:
                 continue
-            base = slugify(item['name']) or 'lieu'
+            base = slugify(item['name_en'])
             new_id, n = base, 2
             while new_id in used:                  # évite les doublons
                 new_id, n = f'{base}-{n}', n + 1
