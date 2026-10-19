@@ -7,15 +7,18 @@ tyrie	town		Droknar's Forge	5174	6541				1	2
 eotn	town		Rata Sum	1646	6062				1	2	
 eotn	town		Gunnar's Hold	6264	1973				1	2	
 eotn	town		Doomlore Shrine	7417	1388				1	2	
-cantha	town		Shing Jea Monastery						1	2	
-cantha	town		Kaineng Center						1	2	
-cantha	town		Houze zu Heltzer						1	2	
-cantha	town		Cavalon						1	2	
+cantha	town		Shing Jea Monastery	2516	18662				1	2	
+cantha	town		Kaineng Center	3960	16804				1	2	
+cantha	town		Houze zu Heltzer	4517	18715				1	2	
+cantha	town		Cavalon	5451	18256				1	2	
 elona	town		Kamadan, Jewel of Istan	6271	12445				1	2	
 elona	town		Sunspear Sanctuary	7638	11740				1	2	
 elona	town		The Kodash Bazaar	8548	10462				1	2	
 elona	town		The Mouth of Torment	6586	9831				1	2	
-zaishen	town		Great Temple of Balthazar						1	2	
-tyrie	gate		Asura Gate								
+zaishen	town		Great Temple of Balthazar	668	14678				1	2	
+tyrie	gate		Asura Gate	3913	4627				2	4	
 elona	gate		Asura Gate	6177	12555				2	4	
-cantha	gate		Asura Gate								
+cantha	gate		Asura Gate	3975	16899				2	4	
+zaishen	arena		Random Arenas	1052	14697				2	4	
+zaishen	arena		Codex Arena	1404	14645				2	4	
+zaishen	arena		Heroe's Ascent	1257	14330				2	4	

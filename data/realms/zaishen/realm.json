@@ -3,10 +3,10 @@
   "name": "Zaishen",
   "title": { "x": 2000, "y": 13500 },
   "categories": {
+    "arena":    { "file": "arenas.json", "icon": { "file": "Arena_Icon.png", "size": [28, 28] } },
+    "mission":  { "file": "missions.json",  "icon": { "file": "Z_Mission_Icon.png",  "size": [28, 28] } },
     "region":   { "file": "regions.json" },
     "town":  { "file": "town.json" },
-    "mission":  { "file": "missions.json",  "icon": { "file": "MissionIcon.png",  "size": [28, 28] } },
-    "zone":     { "file": "zones.json"},
-    "collector": { "file": "collectors.json", "icon": { "file": "Collector_icon.png", "size": [20, 20] } }
+    "zone":     { "file": "zones.json"}
   }
 }

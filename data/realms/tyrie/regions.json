@@ -1,5 +1,5 @@
 [
-  { "name": "Istan",  "x": 5700, "y": 12650 },
-  { "name": "Kourna", "x": 5600, "y": 9400 },
-  { "name": "Vabbi",  "x": 6600, "y": 8200 }
+  {"id": "istan", "name": "Istan", "x": 5700, "y": 12650},
+  {"id": "kourna", "name": "Kourna", "x": 5600, "y": 9400},
+  {"id": "vabbi", "name": "Vabbi", "x": 6600, "y": 8200}
 ]

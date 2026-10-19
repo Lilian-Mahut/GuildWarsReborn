@@ -7,7 +7,6 @@
     "town":  { "file": "towns.json",  "icon": { "file": "Town_Icon.png",  "size": [93, 93] } },
     "outpost":  { "file": "outposts.json",  "icon": { "file": "Outpost_Icon.png",  "size": [65, 65] } },
     "mission":  { "file": "missions.json",  "icon": { "file": "Mission_Icon.png",  "size": [120, 120] } },
-    "zone":     { "file": "zones.json"},
-    "merchant": { "file": "collectors.json", "icon": { "file": "Collector_icon.png", "size": [18, 18] } }
+    "zone":     { "file": "zones.json"}
   }
 }
