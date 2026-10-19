@@ -19,7 +19,7 @@
       "id": "zaishen",
       "tiles": "images/zaishen/{z}/{x}/{y}.jpg",
       "tilesAtZoom0": [1, 1],
-      "offset": [0, 12288]
+      "offset": [0, 13800]
     },
     {
       "id": "cantha",
