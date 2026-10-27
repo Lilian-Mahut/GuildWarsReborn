@@ -13,7 +13,7 @@
       "id": "elona",
       "tiles": "images/elona/{z}/{x}/{y}.jpg",
       "tilesAtZoom0": [2, 2],
-      "offset": [4100, 9210]
+      "offset": [4110, 9210]
     },
     {
       "id": "zaishen",

@@ -104,7 +104,19 @@ def columns_for(langs):
     return BASE_COLUMNS + [f'name_{code}' for code in langs] + EXTRA_COLUMNS
 
 
-def read_csv():
+def detect_delimiter(first_line):
+    """Choisit le séparateur qui retrouve le plus de colonnes connues dans l'en-tête."""
+    expected = {'realm', 'category', 'id', 'name_en', 'x', 'y'}
+    best, best_score = ';', -1
+    for delimiter in (';', ',', '\t'):
+        cells = {c.strip().strip('"').lstrip('\ufeff').lower() for c in first_line.split(delimiter)}
+        score = len(cells & expected)
+        if score > best_score:
+            best, best_score = delimiter, score
+    return best
+
+
+def read_csv(langs):
     if not os.path.exists(CSV_PATH):
         sys.exit(f"{CSV_PATH} introuvable. Pour le créer depuis tes JSON actuels : "
                  f"python tools/build-data.py --import")
@@ -113,17 +125,39 @@ def read_csv():
         text = f.read()
 
     first_line = text.split('\n', 1)[0]
-    delimiter = ';' if first_line.count(';') >= first_line.count(',') else ','
+    delimiter = detect_delimiter(first_line)
 
     reader = csv.DictReader(io.StringIO(text), delimiter=delimiter)
-    fieldnames = [name.strip() for name in (reader.fieldnames or [])]
+
+    # En-têtes tolérants : espaces, guillemets, majuscules (Realm -> realm, minzoom -> minZoom)
+    canonical = {c.lower(): c for c in columns_for(langs)}
+    fieldnames = []
+    for name in (reader.fieldnames or []):
+        clean = name.strip().strip('"').lstrip('\ufeff').strip()
+        fieldnames.append(canonical.get(clean.lower(), clean))
     reader.fieldnames = fieldnames
 
-    rows = []
+    missing = [c for c in ('realm', 'category', 'name_en', 'x', 'y') if c not in fieldnames]
+    if missing:
+        shown = ' | '.join(fieldnames)
+        sys.exit(f'En-tête du CSV incorrect : colonne(s) introuvable(s) : {", ".join(missing)}\n'
+                 f'Séparateur détecté : "{delimiter}"\n'
+                 f'Colonnes lues sur la 1re ligne : {shown}\n'
+                 f'La 1re ligne doit être exactement : {delimiter.join(columns_for(langs))}')
+
+    rows, skipped_headers = [], 0
     for raw in reader:
         row = {k: (v or '').strip() for k, v in raw.items() if k}
-        if any(row.values()):                       # ignore les lignes vides
-            rows.append((reader.line_num, row))
+        if not any(row.values()):
+            continue                                   # ligne vide
+        if row.get('realm', '').lower() == 'realm' and row.get('category', '').lower() == 'category':
+            skipped_headers += 1                       # en-tête recopié par erreur
+            continue
+        rows.append((reader.line_num, row))
+
+    print(f'CSV lu : séparateur "{delimiter}", {len(fieldnames)} colonnes, {len(rows)} lignes de données.')
+    if skipped_headers:
+        print(f'  ({skipped_headers} ligne(s) d\'en-tête en double ignorée(s))')
     return fieldnames, delimiter, rows
 
 
@@ -183,7 +217,7 @@ def import_json(force):
 
 def build(force):
     langs, realms = load_config()
-    fieldnames, delimiter, rows = read_csv()
+    fieldnames, delimiter, rows = read_csv(langs)
     errors = []
 
     # --- Passe 1 : validation des lignes et collecte des id explicites
@@ -192,10 +226,21 @@ def build(force):
         realm, category = row.get('realm', ''), row.get('category', '')
 
         if realm not in realms:
-            errors.append(f'ligne {line} : royaume inconnu "{realm}"')
+            start = ' | '.join([v for v in row.values() if v][:4])
+            valid_realms = ', '.join(realms)
+            if any(ch in realm for ch in ';\t') or realm.count(',') >= 2:
+                errors.append(f'ligne {line} : séparateur différent de celui de l\'en-tête ("{delimiter}"). '
+                              f'Utilise le même séparateur partout (la ligne commence par : {start})')
+            elif not realm:
+                errors.append(f'ligne {line} : colonne "realm" vide. Mets le nom du dossier du royaume '
+                              f'({valid_realms}). Valeurs lues sur cette ligne : {start}')
+            else:
+                errors.append(f'ligne {line} : royaume inconnu "{realm}" (royaumes valides : {valid_realms})')
             continue
         if category != '_realm' and category not in realms[realm]['categories']:
-            errors.append(f'ligne {line} : catégorie inconnue "{category}" pour {realm}')
+            valid_cats = ', '.join(list(realms[realm]['categories']) + ['_realm'])
+            errors.append(f'ligne {line} : catégorie inconnue "{category}" pour {realm} '
+                          f'(catégories valides : {valid_cats})')
             continue
 
         if category == '_realm':
