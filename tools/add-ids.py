@@ -5,6 +5,7 @@ Les lieux qui ont déjà un id ne sont pas modifiés.
 Fais une copie ou un commit Git avant : les fichiers modifiés sont réécrits
 (un lieu par ligne).
 """
+
 import glob
 import json
 import os

@@ -4,7 +4,7 @@
     "gate":     { "kind": "icon", "minZoom": 1, "labelMinZoom": 4 },
     "realm":    { "kind": "text", "minZoom": 0, "maxZoom": 0 },
     "region":   { "kind": "text", "minZoom": 1, "maxZoom": 1 },
-    "town":  { "kind": "icon", "minZoom": 1, "labelMinZoom": 2 },
+    "town":     { "kind": "icon", "minZoom": 1, "labelMinZoom": 2 },
     "outpost":  { "kind": "icon", "minZoom": 2, "labelMinZoom": 3 },
     "mission":  { "kind": "icon", "minZoom": 2, "labelMinZoom": 3 },
     "zone":     { "kind": "text", "minZoom": 4 },

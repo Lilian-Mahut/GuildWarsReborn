@@ -14,7 +14,6 @@ try {
     const map = initMap(world);
     addMarkers(map, world);
     addLanguageControl(map);
-
     const updateTitle = () => { document.title = t('app.title'); };
     updateTitle();
     onLanguageChange(updateTitle);
