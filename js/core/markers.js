@@ -112,19 +112,10 @@ export function addMarkers(map, world) {
             }
 
             def.items.forEach((item, index) => {
-                if (
-                    typeof item.x !== 'number' ||
-                    typeof item.y !== 'number' ||
-                    !Number.isFinite(item.x) ||
-                    !Number.isFinite(item.y)
-                ) {
-                    console.warn(
-                        `Marker ignoré : ${realm.id}/${category}, index ${index}`,
-                        item
-                    );
+                if (!item || !Number.isFinite(item.x) || !Number.isFinite(item.y)) {
+                    console.warn(`Marker ignoré : ${realm.id}/${category}, index ${index}`, item);
                     return;
                 }
-
                 entries.push(createEntry(map, world, realm, category, def, rule, item));
             });
         });
